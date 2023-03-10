@@ -28,6 +28,7 @@
     <version>1.4.1</version>
   </parent>
 
+  <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-resolver-demo-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
 
