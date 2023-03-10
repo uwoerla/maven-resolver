@@ -56,6 +56,11 @@ import org.eclipse.aether.version.VersionScheme;
 public final class GenericVersionScheme
     implements VersionScheme
 {
+    private static final String RELEASE = "RELEASE";
+
+    private static final String LATEST = "LATEST";
+
+    private static final String SNAPSHOT = "SNAPSHOT";
 
     /**
      * Creates a new instance of the version scheme for parsing versions.
@@ -123,7 +128,14 @@ public final class GenericVersionScheme
         }
         else
         {
-            result = new GenericVersionConstraint( UnionVersionRange.from( ranges ) );
+            VersionRange range = UnionVersionRange.from( ranges ) ;
+            boolean upEqLow = range.getLowerBound()!=null&&range.getLowerBound().equals(range.getUpperBound());
+            String version = range.getLowerBound().getVersion().toString();
+            if(upEqLow && !RELEASE.equals(version) && !LATEST.equals(version) && !SNAPSHOT.equals(version)){
+                result = new GenericVersionConstraint(range.getLowerBound().getVersion());
+            }else {
+                result = new GenericVersionConstraint(range);
+            }
         }
 
         return result;

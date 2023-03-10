@@ -63,9 +63,18 @@ public class GenericVersionSchemeTest
         assertEquals( "1.0", c.getVersion().toString() );
         assertTrue( c.containsVersion( new GenericVersion( "1.0" ) ) );
 
+        c = scheme.parseVersionConstraint( "RELEASE" );
+        assertEquals( "RELEASE", c.getVersion().toString() );
+        assertTrue( c.containsVersion( new GenericVersion( "RELEASE" ) ) );
+
+        // [1.0] same as 1.0
         c = scheme.parseVersionConstraint( "[1.0]" );
-        assertEquals( null, c.getVersion() );
+        assertEquals( "1.0", c.getVersion().toString() );
         assertTrue( c.containsVersion( new GenericVersion( "1.0" ) ) );
+
+        c = scheme.parseVersionConstraint( "[RELEASE]" );
+        assertEquals( null, c.getVersion() );
+        assertTrue( c.containsVersion( new GenericVersion( "RELEASE" ) ) );
 
         c = scheme.parseVersionConstraint( "[1.0],[2.0]" );
         assertTrue( c.containsVersion( new GenericVersion( "1.0" ) ) );
